@@ -58,6 +58,11 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {
+        $request->validate([
+            'title' => 'max:40',
+            'content' => 'max:200'
+        ]);
+        
         if($post->user_id !== Auth::id()) {
             return redirect()->route('posts.index')->with('error_message', '不正なアクセスです。');
         }
